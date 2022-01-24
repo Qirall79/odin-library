@@ -1,0 +1,104 @@
+*, *::after, *::before{
+    box-sizing: inherit;
+    margin: 0;
+    padding: 0;
+}
+
+body{
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+    height: 100vh;
+    width: 100vw;
+    background-color: lightblue;
+}
+
+nav{
+    width: 100%;
+    padding: 3rem;
+    background-color: tomato;
+}
+
+.logo{
+    font-size: 2rem;
+    color: white;
+}
+
+#container{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3rem;
+}
+
+.add{
+    padding: 1.5rem 3.5rem;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    border-radius: 5px;
+    background-color: tomato;
+    color: white;
+}
+
+.card{
+    width: 300px;
+    height: 350px;
+    border: 1px solid black;
+    background-color: rgb(0, 58, 145);
+    color: white;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+}
+
+.card p {
+    font-size: 1.2rem;
+}
+
+#books{
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+}
+
+form{
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+    row-gap: 1rem;
+    font-size: 1.2rem;
+    display: none;
+}
+
+form div{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+form input, select{
+    width: 70%;
+    height: 3rem;
+}
+
+form button{
+    width: 12rem;
+    height: 4rem;
+    font-size: 1.2rem;
+    align-self: center;
+    transform: translateX(-3.7rem);
+}
+
+.card button{
+    width: 100px;
+    height: 50px;
+    color: black;
+    margin-left: 1rem;
+}
+
+
+
