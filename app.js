@@ -2,155 +2,162 @@ let myLibrary = [];
 
 displayBooks(myLibrary);
 
-
 // Display form when "Add Book" btn is clicked
 const addButton = document.querySelector(".add");
 addButton.addEventListener("click", (e) => {
-    document.querySelector("#books").style.display = "none";
-    e.target.style.display = "none";
-    document.querySelector("form").style.display = "flex";
+  document.querySelector("#books").style.display = "none";
+  e.target.style.display = "none";
+  document.querySelector("form").style.display = "flex";
 
-    document.querySelectorAll("input").forEach(input => input.value = "");
-})
-
+  document.querySelectorAll("input").forEach((input) => (input.value = ""));
+});
 
 // Taking input from user
 let form = document.querySelector("form");
 
-form.addEventListener("submit", e => {
-    e.preventDefault();
+form.addEventListener("submit", (e) => {
+  e.preventDefault();
 
-    let title = document.querySelector("#title").value;
-    let author = document.querySelector("#author").value;
-    let pages = document.querySelector("#pages").value;
-    let read = document.querySelector("#read").value;
+  let title = document.querySelector("#title");
+  let author = document.querySelector("#author");
+  let pages = document.querySelector("#pages");
+  let read = document.querySelector("#read");
+  let error = document.querySelector(".error");
 
-    addBookToLibrary(title, author, pages, read);
-})
-
-
+  if (title.validity.valueMissing) {
+    title.setCustomValidity("Title field must be filled");
+    title.reportValidity();
+  } else if (author.validity.valueMissing) {
+    author.setCustomValidity("Author field must be filled");
+    author.reportValidity();
+  } else if (pages.validity.valueMissing) {
+    pages.setCustomValidity("Pages field must be filled");
+    pages.reportValidity();
+  } else if (pages.validity.rangeOverflow) {
+    pages.setCustomValidity("Pages number must be less than 200");
+    pages.reportValidity();
+  } else if (pages.validity.rangeUnderflow) {
+    pages.setCustomValidity("Pages number must be greater than 1");
+    pages.reportValidity();
+  } else {
+    title.setCustomValidity("");
+    author.setCustomValidity("");
+    pages.setCustomValidity("");
+    addBookToLibrary(title.value, author.value, pages.value, read.value);
+  }
+});
 
 // Book object constructor
 class Book {
-    constructor(title, author, pagesNumber, isRead){
-        this.title = title;
-        this.author = author;
-        this.pagesNumber = pagesNumber;
-        this.isRead = isRead;
-    }  
+  constructor(title, author, pagesNumber, isRead) {
+    this.title = title;
+    this.author = author;
+    this.pagesNumber = pagesNumber;
+    this.isRead = isRead;
+  }
 }
-
 
 // Adds new book to library
 function addBookToLibrary(title, author, pagesNumber, isRead) {
-    isRead = isRead == "read" ? true : false;
+  isRead = isRead == "read" ? true : false;
 
-    let book = new Book(title, author, pagesNumber, isRead);
+  let book = new Book(title, author, pagesNumber, isRead);
 
-    myLibrary.push(book);
-    
-    displayBooks(myLibrary);
+  myLibrary.push(book);
+
+  displayBooks(myLibrary);
 }
-
 
 // Display all books on the page
-function displayBooks(books){
+function displayBooks(books) {
+  // Check if the Books' display property is none
+  if (document.querySelector("#books").style.display == "none") {
+    document.querySelector("#books").style.display = "flex";
+    addButton.style.display = "inline-block";
+    document.querySelector("form").style.display = "none";
+  }
 
-    // Check if the Books' display property is none
-    if(document.querySelector("#books").style.display == "none"){
-        document.querySelector("#books").style.display = "flex";
-        addButton.style.display = "inline-block";
-        document.querySelector("form").style.display = "none";
-    }
-    
-    document.querySelector("#books").innerHTML = "";
+  document.querySelector("#books").innerHTML = "";
 
-    // Give each book an id attribute based on the count
-    let count = 0;
+  // Give each book an id attribute based on the count
+  let count = 0;
 
-    for(let book of books){
-        
-        let div = document.createElement("div");
-        let buttonsDiv = document.createElement("div");
-        let h2 = document.createElement("h2");
-        let p = document.createElement("p");
-        let span = document.createElement("span");
-        let h5 = document.createElement("h5");
-        let btnStatus = document.createElement("button");
-        let btnDelete = document.createElement("button");
+  for (let book of books) {
+    let div = document.createElement("div");
+    let buttonsDiv = document.createElement("div");
+    let h2 = document.createElement("h2");
+    let p = document.createElement("p");
+    let span = document.createElement("span");
+    let h5 = document.createElement("h5");
+    let btnStatus = document.createElement("button");
+    let btnDelete = document.createElement("button");
 
-        btnStatus.innerHTML = "Change Status";
-        btnDelete.innerHTML = "Delete";
+    btnStatus.innerHTML = "Change Status";
+    btnDelete.innerHTML = "Delete";
 
-        btnStatus.classList.add("btnStatus");
-        btnDelete.classList.add("btnDelete");
+    btnStatus.classList.add("btnStatus");
+    btnDelete.classList.add("btnDelete");
 
-        buttonsDiv.appendChild(btnStatus);
-        buttonsDiv.appendChild(btnDelete);
+    buttonsDiv.appendChild(btnStatus);
+    buttonsDiv.appendChild(btnDelete);
 
-        div.classList.add("card");
+    div.classList.add("card");
 
-        h2.innerHTML = book.title;
-        p.innerHTML = book.author;
-        span.innerHTML = book.pagesNumber;
-        h5.innerHTML = book.isRead ? "Read" : "Unread";
+    h2.innerHTML = book.title;
+    p.innerHTML = book.author;
+    span.innerHTML = book.pagesNumber;
+    h5.innerHTML = book.isRead ? "Read" : "Unread";
 
-        if(h5.innerHTML == "Read"){
-            h5.style.color = "green";
-        }
-        else{
-            h5.style.color = "red";
-        }
-        
-
-        div.appendChild(h2);
-        div.appendChild(p);
-        div.appendChild(span);
-        div.appendChild(h5);
-        div.appendChild(buttonsDiv);
-        div.setAttribute("data-id", count);
-
-        document.querySelector("#books").appendChild(div);
-        count++;
-
+    if (h5.innerHTML == "Read") {
+      h5.style.color = "green";
+    } else {
+      h5.style.color = "red";
     }
 
+    div.appendChild(h2);
+    div.appendChild(p);
+    div.appendChild(span);
+    div.appendChild(h5);
+    div.appendChild(buttonsDiv);
+    div.setAttribute("data-id", count);
 
-    // Change status
-    const btnStatus = document.querySelectorAll(".btnStatus");
+    document.querySelector("#books").appendChild(div);
+    count++;
+  }
 
-    btnStatus.forEach(btn => {
-        btn.addEventListener("click", e => {
-            let cardID = e.target.parentElement.parentElement.dataset.id;
-            myLibrary[cardID].isRead = myLibrary[cardID].isRead ? false : true;
-            
-            if(myLibrary[cardID].isRead){
-                document.querySelector(`.card[data-id = "${cardID}"] h5`).innerHTML = "Read";
-                document.querySelector(`.card[data-id = "${cardID}"] h5`).style.color = "green";
-            }
-            else{
-                document.querySelector(`.card[data-id = "${cardID}"] h5`).innerHTML = "Unread";
-                document.querySelector(`.card[data-id = "${cardID}"] h5`).style.color = "red";
-            }
-        })
-    })
+  // Change status
+  const btnStatus = document.querySelectorAll(".btnStatus");
 
+  btnStatus.forEach((btn) => {
+    btn.addEventListener("click", (e) => {
+      let cardID = e.target.parentElement.parentElement.dataset.id;
+      myLibrary[cardID].isRead = myLibrary[cardID].isRead ? false : true;
 
+      if (myLibrary[cardID].isRead) {
+        document.querySelector(`.card[data-id = "${cardID}"] h5`).innerHTML =
+          "Read";
+        document.querySelector(`.card[data-id = "${cardID}"] h5`).style.color =
+          "green";
+      } else {
+        document.querySelector(`.card[data-id = "${cardID}"] h5`).innerHTML =
+          "Unread";
+        document.querySelector(`.card[data-id = "${cardID}"] h5`).style.color =
+          "red";
+      }
+    });
+  });
 
-    // Delete book
-    const btnDelete = document.querySelectorAll(".btnDelete");
+  // Delete book
+  const btnDelete = document.querySelectorAll(".btnDelete");
 
-    btnDelete.forEach(btn => {
-        btn.addEventListener("click", e => {
-            let cardID = parseInt(e.target.parentElement.parentElement.dataset.id);
-            
-            myLibrary.splice(cardID, 1);
+  btnDelete.forEach((btn) => {
+    btn.addEventListener("click", (e) => {
+      let cardID = parseInt(e.target.parentElement.parentElement.dataset.id);
 
-            document.querySelector(`.card[data-id = "${cardID}"]`).style.display = "none";
+      myLibrary.splice(cardID, 1);
 
-            
-        })
-    })
+      document.querySelector(`.card[data-id = "${cardID}"]`).style.display =
+        "none";
+    });
+  });
 }
-
-

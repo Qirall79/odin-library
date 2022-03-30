@@ -1,52 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
     <title>Library</title>
-</head>
-<body>
+  </head>
+  <body>
     <div id="container">
-        <nav>
-            <div class="logo">Walid's Library</div>
-        </nav>
+      <nav>
+        <div class="logo">Walid's Library</div>
+      </nav>
 
-        <div id="books">
+      <div id="books"></div>
+
+      <form novalidate>
+        <div class="title-form">
+          <label for="title">Title</label>
+          <input type="text" name="title" id="title" required />
         </div>
 
-        <form>
-            <div class="title-form">
-                <label for="title">Title</label>
-                <input type="text" name="title" id="title">
-            </div>
+        <div class="author-form">
+          <label for="author">Author</label>
+          <input type="text" name="author" id="author" required />
+        </div>
 
-            <div class="author-form">
-                <label for="author">Author</label>
-                <input type="text" name="author" id="author">
-            </div>
+        <div class="pages-form">
+          <label for="pages">Number of Pages</label>
+          <input type="number" name="pages" id="pages" min="1" required />
+        </div>
 
-            <div class="pages-form">
-                <label for="pages">Number of Pages</label>
-                <input type="number" name="pages" id="pages" min="1">
-            </div>
+        <div class="read-form">
+          <label for="read">Status</label>
+          <select name="read" id="read">
+            <option value="read">Read</option>
+            <option value="unread">Unread</option>
+          </select>
+        </div>
 
-            <div class="read-form">
-                <label for="read">Status</label>
-                <select name="read" id="read">
-                    <option value="read">Read</option>
-                    <option value="unread">Unread</option>
-                </select>
-            </div>
+        <button type="submit">Add</button>
+      </form>
 
-            <button type="submit">Add</button>
-        </form>
-
-        <button class="add">Add Book</button>
+      <button class="add">Add Book</button>
     </div>
 
-
     <script src="./app.js"></script>
-</body>
+  </body>
 </html>
